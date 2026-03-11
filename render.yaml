@@ -23,7 +23,11 @@ services:
       - key: ALLOWED_ORIGINS
         sync: false
 
-      # Cloudflare R2 - required for persistent file storage in cloud
+      # ── Storage: Vercel Blob (recommended - 1 var, integrated with Vercel) ──
+      - key: BLOB_READ_WRITE_TOKEN
+        sync: false
+
+      # ── Storage: Cloudflare R2 (alternative - 10GB free) ─────────────────────
       - key: R2_ACCOUNT_ID
         sync: false
       - key: R2_ACCESS_KEY_ID

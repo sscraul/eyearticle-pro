@@ -108,7 +108,7 @@ async def save_to_area(request: MoveRequest):
         return {"status": "already_saved", "safe_name": new_safe_name}
 
     try:
-        if settings.use_r2:
+        if settings.use_cloud_storage:
             import src.storage as storage
             storage.move_prefix(old_safe_name, new_safe_name)
         else:
@@ -127,11 +127,14 @@ async def save_to_area(request: MoveRequest):
 
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "r2_enabled": settings.use_r2}
+    return {
+        "status": "ok",
+        "storage": "vercel_blob" if settings.use_vercel_blob else ("r2" if settings.use_r2 else "local"),
+    }
 
 
-# Serve output directory for images (local dev / fallback when R2 not configured)
-if not settings.use_r2:
+# Serve output directory for images (local dev / fallback when no cloud storage configured)
+if not settings.use_cloud_storage:
     if not settings.output_dir.exists():
         settings.output_dir.mkdir(parents=True)
     app.mount("/api/outputs", StaticFiles(directory=str(settings.output_dir)), name="outputs")

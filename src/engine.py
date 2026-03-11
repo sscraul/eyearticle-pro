@@ -79,8 +79,8 @@ def run_ophthalmo_agent(
 
     final_summary = summary_md
 
-    # Upload to R2 if configured, rewriting image URLs in the markdown
-    if settings.use_r2:
+    # Upload to cloud storage if configured, rewriting image URLs in the markdown
+    if settings.use_cloud_storage:
         update_progress("Enviando arquivos para o storage na nuvem...", 92)
         images_dir = output_dir / "images"
         image_urls: dict[str, str] = {}
@@ -93,7 +93,7 @@ def run_ophthalmo_agent(
             image_urls = {f"images/{k}": v for k, v in image_urls.items()}
 
         final_summary = storage.rewrite_markdown_image_urls(summary_md, image_urls)
-        logger.info("Rewrote markdown image URLs to R2 public URLs")
+        logger.info("Rewrote markdown image URLs to cloud storage public URLs")
 
     with open(final_md_path, "w", encoding="utf-8") as f:
         f.write(final_summary)
