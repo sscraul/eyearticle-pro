@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: eyearticle-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+
+    envVars:
+      # Required
+      - key: GEMINI_API_KEY
+        sync: false
+
+      # Optional - for higher PubMed rate limits
+      - key: NCBI_API_KEY
+        sync: false
+
+      - key: UNPAYWALL_EMAIL
+        sync: false
+
+      # CORS - set to your Vercel domain(s)
+      # Example: https://eyearticle.vercel.app,https://yourdomain.com
+      - key: ALLOWED_ORIGINS
+        sync: false
+
+      # Cloudflare R2 - required for persistent file storage in cloud
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_PUBLIC_URL
+        sync: false
+
+      # App settings
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DEFAULT_FORMAT
+        value: md
+      - key: CLEANUP_AFTER
+        value: "true"

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+*.env.local
+
+# Data / outputs (não commitar dados de pesquisa)
+/output/
+/cache/
+*.pdf
+
+# Dashboard
+dashboard/node_modules/
+dashboard/.next/
+dashboard/.env.local
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
