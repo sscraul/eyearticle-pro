@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { 
-  Search, Loader2, FileText, CheckCircle2, AlertCircle, 
-  ImageIcon, Folder, Plus, ChevronRight, LayoutDashboard, 
-  Settings, History, Save, Download
+import {
+  Loader2, FileText, CheckCircle2, AlertCircle,
+  Folder, Plus,
+  Settings, History, Download
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -18,6 +18,7 @@ interface JobStatus {
   status: string;
   progress: number;
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   result?: any;
 }
 
@@ -334,18 +335,19 @@ export default function Dashboard() {
                        <ReactMarkdown 
                          remarkPlugins={[remarkGfm]}
                          components={{
-                            p: ({node, ...props}) => <p className="text-slate-700 leading-relaxed text-justify mb-8 text-[1.125rem] font-body" {...props} />,
-                            strong: ({node, ...props}) => <strong className="font-black text-slate-900 bg-blue-50/80 px-1 rounded-sm border-b-2 border-blue-100" {...props} />,
-                            h2: ({node, ...props}) => <h2 className="font-heading text-2xl md:text-3xl font-black mt-16 mb-8 text-slate-900 border-l-4 border-blue-600 pl-5 py-2" {...props} />,
-                            h3: ({node, ...props}) => <h3 className="font-heading text-xl font-black mt-10 mb-5 text-blue-700" {...props} />,
-                            ul: ({node, ...props}) => <ul className="space-y-4 my-8 pl-8 list-none" {...props} />,
-                            li: ({node, ...props}) => (
+                            p: ({...props}) => <p className="text-slate-700 leading-relaxed text-justify mb-8 text-[1.125rem] font-body" {...props} />,
+                            strong: ({...props}) => <strong className="font-black text-slate-900 bg-blue-50/80 px-1 rounded-sm border-b-2 border-blue-100" {...props} />,
+                            h2: ({...props}) => <h2 className="font-heading text-2xl md:text-3xl font-black mt-16 mb-8 text-slate-900 border-l-4 border-blue-600 pl-5 py-2" {...props} />,
+                            h3: ({...props}) => <h3 className="font-heading text-xl font-black mt-10 mb-5 text-blue-700" {...props} />,
+                            ul: ({...props}) => <ul className="space-y-4 my-8 pl-8 list-none" {...props} />,
+                            li: ({...props}) => (
                               <li className="relative pl-6 text-slate-700 leading-relaxed text-justify font-body text-lg">
                                 <span className="absolute left-0 top-3 w-1.5 h-1.5 rounded-full bg-blue-500/40" />
                                 {props.children}
                               </li>
                             ),
-                            img: ({node, src, alt, ...props}) => {
+                            // eslint-disable-next-line @next/next/no-img-element
+                            img: ({src, alt, ...props}) => {
                               // If R2 is configured, markdown already contains full URLs.
                               // Otherwise fall back to local backend serving.
                               const imgSrc = typeof src === "string" && src.startsWith("http")
